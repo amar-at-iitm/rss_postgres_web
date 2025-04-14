@@ -41,6 +41,23 @@ services:
       - ./app:/app
     command: ["python", "main.py"]
 
+  web:
+    build:
+      context: ./web
+    container_name: rss_web_container
+    restart: unless-stopped
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
 
 volumes:
   rss_data:
