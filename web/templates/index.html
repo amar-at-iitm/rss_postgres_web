@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RSS News</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .article { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; }
+        img { max-width: 100%; height: auto; }
+        h2 { margin: 0; }
+        a { text-decoration: none; color: #007BFF; }
+    </style>
+</head>
+<body>
+    <h1>News Articles ({{ filter_date }})</h1>
+    <form method="get">
+        <label for="date">Filter by Date:</label>
+        <input type="date" id="date" name="date" value="{{ filter_date }}">
+        <button type="submit">Filter</button>
+    </form>
+
+
+    {% for title, publication_timestamp, weblink, image, summary in articles %}
+        <div class="article">
+            <h2><a href="{{ weblink }}" target="_blank">{{ title }}</a></h2>
+            {% if image %}
+                <a href="{{ weblink }}" target="_blank">
+                    <img src="{{ image }}" alt="News Image">
+                </a>
+            {% endif %}
+            <p>{{ summary }}</p>
+            <p><em>Published on: {{ publication_timestamp }}</em></p>
+        </div>
+    {% endfor %}
+</body>
+</html>
